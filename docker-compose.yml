@@ -16,7 +16,7 @@ services:
       - postgres
     deploy:
       placement:
-        constraints: [node.hostname == pWorker-1] # Assign to pWorker-1
+        constraints: [node.hostname == P1WORKER-1] # Assign to pWorker-1
 
   pgadmin:
     image: dpage/pgadmin4
@@ -32,7 +32,7 @@ services:
       - postgres
     deploy:
       placement:
-        constraints: [node.hostname == pWorker-1] # Assign to pWorker-1
+        constraints: [node.hostname == P1WORKER-1] # Assign to pWorker-1
 
   servicereg:
     image: vinaysteja0231/service-reg:V17
@@ -48,7 +48,7 @@ services:
       SPRING_PROFILES_ACTIVE: docker
     deploy:
       placement:
-        constraints: [node.hostname == pManager] # Assign to pManager
+        constraints: [node.hostname == P1MANAGER] # Assign to pManager
 
   user:
     image: vinaysteja0231/user:V17
@@ -63,7 +63,7 @@ services:
       SPRING_PROFILES_ACTIVE: docker
     deploy:
       placement:
-        constraints: [node.hostname == pManager] # Assign to pManager
+        constraints: [node.hostname == P1MANAGER] # Assign to pManager
 
   tour:
     image: vinaysteja0231/tour:V17
@@ -78,7 +78,7 @@ services:
       SPRING_PROFILES_ACTIVE: docker
     deploy:
       placement:
-        constraints: [node.hostname == pWorker-2] # Assign to pWorker-2
+        constraints: [node.hostname == P1WORKER-2] # Assign to pWorker-2
 
   review:
     image: vinaysteja0231/review:V17
@@ -93,7 +93,7 @@ services:
       SPRING_PROFILES_ACTIVE: docker
     deploy:
       placement:
-        constraints: [node.hostname == pWorker-1] # Assign to pWorker-1
+        constraints: [node.hostname == P1WORKER-1] # Assign to pWorker-1
 
   touristguide:
     image: vinaysteja0231/touristguide:V17
@@ -108,7 +108,7 @@ services:
       SPRING_PROFILES_ACTIVE: docker
     deploy:
       placement:
-        constraints: [node.hostname == pWorker-2] # Assign to pWorker-2
+        constraints: [node.hostname == P1WORKER-2] # Assign to pWorker-2
 
   payment:
     image: vinaysteja0231/payment:V17
@@ -123,7 +123,7 @@ services:
       SPRING_PROFILES_ACTIVE: docker
     deploy:
       placement:
-        constraints: [node.hostname == pWorker-2] # Assign to pWorker-2
+        constraints: [node.hostname == P1WORKER-2] # Assign to pWorker-2
 
   gateway:
     image: vinaysteja0231/gateway:V17
@@ -138,7 +138,7 @@ services:
       SPRING_PROFILES_ACTIVE: docker
     deploy:
       placement:
-        constraints: [node.hostname == pManager] # Assign to pManager
+        constraints: [node.hostname == P1MANAGER] # Assign to pManager
 
   booking:
     image: vinaysteja0231/booking:V17
@@ -154,7 +154,7 @@ services:
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://servicereg:8761/eureka
     deploy:
       placement:
-        constraints: [node.hostname == pWorker-1] # Assign to pWorker-1
+        constraints: [node.hostname == P1WORKER-1] # Assign to pWorker-1
 
   rabbitmq:
     image: rabbitmq:3-management
@@ -166,7 +166,7 @@ services:
       - postgres
     deploy:
       placement:
-        constraints: [node.hostname == pManager] # Assign to pManager
+        constraints: [node.hostname == P1MANAGER] # Assign to pManager
 
   zipkin:
     image: openzipkin/zipkin
@@ -177,7 +177,7 @@ services:
       - postgres
     deploy:
       placement:
-        constraints: [node.hostname == pManager] # Assign to pManager
+        constraints: [node.hostname == P1MANAGER] # Assign to pManager
 
   frontend:
     image: vinaysteja0231/mtravel-bees:latestV18
@@ -190,7 +190,7 @@ services:
       - postgres
     deploy:
       placement:
-        constraints: [node.hostname == pManager] # Assign to pManager
+        constraints: [node.hostname == P1MANAGER] # Assign to pManager
 
 networks:
   microservice-network:
