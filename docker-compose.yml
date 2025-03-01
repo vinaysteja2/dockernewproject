@@ -2,7 +2,7 @@ services:
   movies:
     image: vinaysteja0231/paymovies:latest
     ports:
-      - "80:80"
+      - "81:80"
     deploy:
       replicas: 2
 
