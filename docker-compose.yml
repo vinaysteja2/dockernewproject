@@ -1,28 +1,28 @@
 services:
   movies:
-    image: vinaysteja0231/paymevics:latest
+    image: vinaysteja0231/paymovies:latest
     ports:
-      - "8080:8080"
+      - "80:80"
     deploy:
       replicas: 2
 
   train:
-    image: vinaysteja0231/paytrain:latest
+    image: vinaysteja0231/paytrains:latest
     ports:
-      - "8081:8081"
+      - "81:81"
     deploy:
       replicas: 2
 
   dth:
     image: vinaysteja0231/paydth:latest
     ports:
-      - "8082:8082"
+      - "82:82"
     deploy:
       replicas: 2
 
   recharger:
     image: vinaysteja0231/payrecharge:latest
     ports:
-      - "8083:8083"
+      - "83:83"
     deploy:
       replicas: 2
