@@ -9,20 +9,20 @@ services:
   train:
     image: vinaysteja0231/paytrains:latest
     ports:
-      - "81:81"
+      - "82:80"
     deploy:
       replicas: 2
 
   dth:
     image: vinaysteja0231/paydth:latest
     ports:
-      - "82:82"
+      - "83:80"
     deploy:
       replicas: 2
 
   recharger:
     image: vinaysteja0231/payrecharge:latest
     ports:
-      - "83:83"
+      - "84:80"
     deploy:
       replicas: 2
