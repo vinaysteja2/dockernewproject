@@ -188,9 +188,6 @@ services:
     networks:
       - microservice-network
       - postgres
-    # volumes:
-    #   - /root/frontend-config/environment.prod.ts:/app/src/environments/environment.prod.ts
-    #   - /root/frontend-config/environment.ts:/app/src/environments/environment.ts
      environment:
         - API_URL=http://65.2.141.88:8090
 
