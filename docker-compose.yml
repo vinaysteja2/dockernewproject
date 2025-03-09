@@ -188,7 +188,7 @@ services:
     networks:
       - microservice-network
       - postgres
-     environment:
+    environment:
         - API_URL=http://65.2.141.88:8090
 
     deploy:
