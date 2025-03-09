@@ -1,28 +1,203 @@
+version: '3.7'
+
 services:
-  movies:
-    image: vinaysteja0231/paymovies:latest
-    ports:
-      - "81:80"
-    deploy:
-      replicas: 2
 
-  train:
-    image: vinaysteja0231/paytrains:latest
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: vinayteja
+      POSTGRES_DB: booking
+    volumes:
+      - postgres:/data/postgres
     ports:
-      - "82:80"
+      - "5432:5432"
+    networks:
+      - postgres
     deploy:
-      replicas: 2
+      placement:
+        constraints: [node.hostname == P1WORKER-1] # Assign to pWorker-1
 
-  dth:
-    image: vinaysteja0231/paydth:latest
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    volumes:
+      - pgadmin:/var/lib/pgadmin
     ports:
-      - "83:80"
+      - "5050:80"
+    networks:
+      - postgres
     deploy:
-      replicas: 2
+      placement:
+        constraints: [node.hostname == P1WORKER-1] # Assign to pWorker-1
 
-  recharger:
-    image: vinaysteja0231/payrecharge:latest
+  servicereg:
+    image: vinaysteja0231/service-reg:V17
     ports:
-      - "84:80"
+      - "8761:8761"
+    depends_on:
+      - postgres
+      - pgadmin
+    networks:
+      - microservice-network
+      - postgres
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
     deploy:
-      replicas: 2
+      placement:
+        constraints: [node.hostname == P1MANGER] # Assign to pManager
+
+  user:
+    image: vinaysteja0231/user:V17
+    ports:
+      - "8086:8086"
+    depends_on:
+      - servicereg
+    networks:
+      - microservice-network
+      - postgres
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    deploy:
+      placement:
+        constraints: [node.hostname == P1MANGER] # Assign to pManager
+
+  tour:
+    image: vinaysteja0231/tour:V17
+    ports:
+      - "8083:8083"
+    depends_on:
+      - servicereg
+    networks:
+      - microservice-network
+      - postgres
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    deploy:
+      placement:
+        constraints: [node.hostname == P1WORKER-2] # Assign to pWorker-2
+
+  review:
+    image: vinaysteja0231/review:V17
+    ports:
+      - "8085:8085"
+    depends_on:
+      - servicereg
+    networks:
+      - microservice-network
+      - postgres
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    deploy:
+      placement:
+        constraints: [node.hostname == P1WORKER-1] # Assign to pWorker-1
+
+  touristguide:
+    image: vinaysteja0231/touristguide:V17
+    ports:
+      - "8088:8088"
+    depends_on:
+      - servicereg
+    networks:
+      - microservice-network
+      - postgres
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    deploy:
+      placement:
+        constraints: [node.hostname == P1WORKER-2] # Assign to pWorker-2
+
+  payment:
+    image: vinaysteja0231/payment:V17
+    ports:
+      - "8089:8089"
+    depends_on:
+      - servicereg
+    networks:
+      - microservice-network
+      - postgres
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    deploy:
+      placement:
+        constraints: [node.hostname == P1WORKER-2] # Assign to pWorker-2
+
+  gateway:
+    image: vinaysteja0231/gateway:V17
+    ports:
+      - "8090:8090"
+    depends_on:
+      - servicereg
+    networks:
+      - microservice-network
+      - postgres
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    deploy:
+      placement:
+        constraints: [node.hostname == P1MANGER] # Assign to pManager
+
+  booking:
+    image: vinaysteja0231/booking:V17
+    ports:
+      - "8084:8084"
+    depends_on:
+      - servicereg
+    networks:
+      - microservice-network
+      - postgres
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://servicereg:8761/eureka
+    deploy:
+      placement:
+        constraints: [node.hostname == P1WORKER-1] # Assign to pWorker-1
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - microservice-network
+      - postgres
+    deploy:
+      placement:
+        constraints: [node.hostname == P1MANGER] # Assign to pManager
+
+  zipkin:
+    image: openzipkin/zipkin
+    ports:
+      - "9411:9411"
+    networks:
+      - microservice-network
+      - postgres
+    deploy:
+      placement:
+        constraints: [node.hostname == P1MANGER] # Assign to pManager
+
+  frontend:
+    image: vinaysteja0231/mtravel-bees:latestV18
+    ports:
+      - "4200:80"
+    depends_on:
+      - gateway
+    networks:
+      - microservice-network
+      - postgres
+    deploy:
+      placement:
+        constraints: [node.hostname == P1MANGER] # Assign to pManager
+
+networks:
+  microservice-network:
+    driver: overlay
+  postgres:
+    driver: overlay
+
+volumes:
+  postgres:
+  pgadmin:
