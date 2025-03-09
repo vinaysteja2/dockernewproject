@@ -188,6 +188,9 @@ services:
     networks:
       - microservice-network
       - postgres
+    volumes:
+      - /root/frontend-config/environment.prod.ts:/app/src/environments/environment.prod.ts
+
     deploy:
       placement:
         constraints: [node.hostname == P1MANGER] # Assign to pManager
