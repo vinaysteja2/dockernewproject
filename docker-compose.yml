@@ -35,7 +35,7 @@ services:
         constraints: [node.hostname == P1WORKER-1] # Assign to pWorker-1
 
   servicereg:
-    image: vinaysteja0231/service-reg:V17
+    image: vinaysteja0231/service-reg:V1
     ports:
       - "8761:8761"
     depends_on:
@@ -51,7 +51,7 @@ services:
         constraints: [node.hostname == P1MANGER] # Assign to pManager
 
   user:
-    image: vinaysteja0231/user:V17
+    image: vinaysteja0231/user:V1
     ports:
       - "8086:8086"
     depends_on:
@@ -66,7 +66,7 @@ services:
         constraints: [node.hostname == P1MANGER] # Assign to pManager
 
   tour:
-    image: vinaysteja0231/tour:V17
+    image: vinaysteja0231/tour:V1
     ports:
       - "8083:8083"
     depends_on:
@@ -81,7 +81,7 @@ services:
         constraints: [node.hostname == P1WORKER-2] # Assign to pWorker-2
 
   review:
-    image: vinaysteja0231/review:V17
+    image: vinaysteja0231/review:V1
     ports:
       - "8085:8085"
     depends_on:
@@ -96,7 +96,7 @@ services:
         constraints: [node.hostname == P1WORKER-1] # Assign to pWorker-1
 
   touristguide:
-    image: vinaysteja0231/touristguide:V17
+    image: vinaysteja0231/touristguide:V1
     ports:
       - "8088:8088"
     depends_on:
@@ -111,7 +111,7 @@ services:
         constraints: [node.hostname == P1WORKER-2] # Assign to pWorker-2
 
   payment:
-    image: vinaysteja0231/payment:V17
+    image: vinaysteja0231/payment:V1
     ports:
       - "8089:8089"
     depends_on:
@@ -126,7 +126,7 @@ services:
         constraints: [node.hostname == P1WORKER-2] # Assign to pWorker-2
 
   gateway:
-    image: vinaysteja0231/gateway:V17
+    image: vinaysteja0231/gateway:V1
     ports:
       - "8090:8090"
     depends_on:
@@ -141,7 +141,7 @@ services:
         constraints: [node.hostname == P1MANGER] # Assign to pManager
 
   booking:
-    image: vinaysteja0231/booking:V17
+    image: vinaysteja0231/booking:V1
     ports:
       - "8084:8084"
     depends_on:
@@ -180,7 +180,7 @@ services:
         constraints: [node.hostname == P1MANGER] # Assign to pManager
 
   frontend:
-    image: vinaysteja0231/mtravel-bees:latestV18
+    image: vinaysteja0231/mtravel-bees:V1
     ports:
       - "4200:80"
     depends_on:
