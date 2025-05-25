@@ -5,8 +5,8 @@ services:
   postgres:
     image: postgres
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: vinayteja
+      POSTGRES_USER: ########################
+      POSTGRES_PASSWORD: #################
       POSTGRES_DB: booking
     volumes:
       - postgres:/data/postgres
